@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+{% block content1 %}
+<style>
+    #div_master {
+        background-color: #c3d0fa;
+        display: flex;
+        justify-content: center; 
+        align-items: start; 
+        height: auto; 
+        overflow-x: hidden;
+        overflow-y: auto;
+        margin: 0; 
+        padding: 0; 
+        width: 100%; 
+        position: relative;
+    }
+
+    #image_container {
+        width: 100%; 
+        text-align: center; 
+        padding: 0; 
+        margin: 0; 
+    }
+
+    #image_container img {
+        width: 100vw;
+        height: auto; 
+        display: block; 
+    }
+    #left_menu {
+        background-color: #fcd9ea;
+        position: absolute; 
+        top: 20px; 
+        left: 20px; 
+        width: 250px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+        padding: 15px;
+        z-index: 10;
+    }
+    .label {
+        margin-bottom: 0; 
+        color: #ff5733; 
+        font-weight: bold; 
+    }
+    #current_time {
+        margin-top: 0; 
+        color: #0077ff; 
+        font-size: 1.2em;
+    }
+    #content_area {
+        color:#BA55D3;
+        position: absolute;
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        min-height: auto;
+        margin-top: 20px;
+        width: 60%;
+        width: 800px;
+        text-align: center;
+        z-index: 10;
+        display: none;
+
+    }
+    #content_area_2{
+        color:#BA55D3;
+        position: absolute;
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border-radius: 12px;
+        padding: 20px;
+        min-height: auto;
+        margin-top: 20px;
+        width: 60%;
+        width: 800px;
+        text-align: center;
+        z-index: 10;
+        display: none;
+    }
+    .menu_item {
+        margin-bottom: 10px;
+    }
+
+    .menu_item a {
+        text-decoration: none;
+        color: #0077ff; 
+        font-weight: bold;
+    }
+
+    .menu_item a:hover {
+        color: #0055aa; 
+    }
+</style>
+<div id="div_master">
+    <div id="left_menu">
+        <p class="label">Time now:</p>
+        <p id="current_time"></p>
+        <div class="menu_item" onclick="showContentArea()"><a href="#item1">今日新番</a></div>
+        <div class="menu_item" onclick="showContentArea_2()"><a href="#item2">本季新番清單</a></div>
+        <div class="menu_item""><a href="https://myanimelist.net/profile/takamono">mal連結</a></div>
+       
+    </div>
+    <div id="content_area">
+        
+    
+
+        <div id="monday">
+            <p style="text-align: left;">今天新番</p>
+            <p>這公司有我喜歡的人</p>
+            <p>我的幸福婚約</p>
+            <p>(黑岩)</p>
+        </div>
+
+        <div id="tuesday">
+            <p style="text-align: left;">今天新番</p>
+            <p>群花綻放</p>
+            <p>結緣甘神神社</p>
+        </div>
+
+        <div id="wednesday">
+            <p style="text-align: left;">今天新番</p>
+            <p>蜂蜜檸檬蘇打</p>
+            <p>Re s3</p>
+            <p>灰色的果實s3</p> 
+        </div>
+
+        <div id="thursday">
+            <p style="text-align: left;">今天新番</p>
+            <p>Ave mujica</p>
+            <p>剎那lily</p>
+            <p>新石紀s4</p> 
+            <p>青春之箱</p>
+        </div>
+
+        <div id="friday">
+            <p style="text-align: left;">今天新番</p>
+            <p>妖精</p>
+            <p>我和班上最討厭的女生結婚了</p>
+            <p>空色utility</p> 
+            <p>藥師s2</p>
+        </div>
+
+        <div id="saturday">
+            <p style="text-align: left;">今天新番</p>
+            <p>我獨自升級s2</p>
+            <p>青驅s5</p>
+            <p>沖繩</p> 
+            <p>(金牌得主)</p>
+            <p>阪本日常</p>
+            <p>地球的運動</p>
+        </div>
+
+        <div id="sunday">
+            <p style="text-align: left;">今天新番</p>
+            <p>100女朋友s2</p>
+            <p>香格里拉s2</p>
+            <p>(全修)</p> 
+            <p>花子君s2</p>
+        </div>
+
+        
+    </div>
+    <div id="content_area_2">
+        <p>這公司有我喜歡的人</p>
+        <p>我的幸福婚約</p>
+        <p>(黑岩)</p>
+        <p>群花綻放</p>
+        <p>結緣甘神神社</p>
+        <p>蜂蜜檸檬蘇打</p>
+        <p>Re s3</p>
+        <p>灰色的果實s3</p> 
+        <p>Ave mujica</p>
+        <p>剎那lily</p>
+        <p>新石紀s4</p> 
+        <p>青春之箱</p>
+        <p>妖精</p>
+        <p>我和班上最討厭的女生結婚了</p>
+        <p>空色utility</p> 
+        <p>藥師s2</p>
+        <p>我獨自升級s2</p>
+        <p>青驅s5</p>
+        <p>沖繩</p> 
+        <p>(金牌得主)</p>
+        <p>阪本日常</p>
+        <p>地球的運動</p>
+        <p>100女朋友s2</p>
+        <p>香格里拉s2</p>
+        <p>(全修)</p> 
+        <p>花子君s2</p>
+    </div>
+
+    
+
+    <div id="image_container">
+        <img src="/static/images/Kiraraten2021.webp" alt="Background Image">
+    </div>
+
+</div>
+
+<script>
+    function updateTime() {
+        const now = new Date();
+        const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const weekday = weekdays[now.getDay()];
+
+        const formattedTime = `${year}/${month}/${day}(${weekday}) ${hours}:${minutes}`;
+        document.getElementById("current_time").textContent = formattedTime;
+    }
+
+
+    updateTime();
+    setInterval(updateTime, 10000); 
+    function showContentArea() {
+        const now = new Date();
+        const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+        const weekday = weekdays[now.getDay()];
+
+        const contentAreaContainer = document.getElementById("content_area");
+        contentAreaContainer.style.display = "block";
+
+        const weekdayBlocks = contentAreaContainer.querySelectorAll("div");
+        weekdayBlocks.forEach((block) => {
+        block.style.display = "none";
+        });
+
+    
+        let contentBlock;
+
+        if (weekday=="日"){
+            const contentArea = document.getElementById("sunday");
+            contentArea.style.display = "block"; 
+        }
+        else if(weekday=="一"){
+            const contentArea = document.getElementById("monday");
+            contentArea.style.display = "block"; 
+        }
+        else if(weekday=="二"){
+            const contentArea = document.getElementById("tuesday");
+            contentArea.style.display = "block"; 
+        }
+        else if(weekday=="三"){
+            const contentArea = document.getElementById("wednesday");
+            contentArea.style.display = "block";
+        }
+        else if(weekday=="四"){
+            const contentArea = document.getElementById("thursday");
+            contentArea.style.display = "block"; 
+        }
+        else if(weekday=="五"){
+            const contentArea = document.getElementById("friday");
+            contentArea.style.display = "block"; 
+        }
+        else {
+            const contentArea = document.getElementById("saturday");
+            contentArea.style.display = "block"; 
+        }
+
+        const contentArea = document.getElementById("content_area_2");
+        contentArea.style.display = "none";
+
+        /*const contentArea = document.getElementById("content_area");
+        contentArea.style.display = "block";*/
+
+    } 
+
+    function showContentArea_2(){
+        const contentArea = document.getElementById("content_area_2");
+        contentArea.style.display = "block";
+
+        const contentArea_1 = document.getElementById("content_area");
+        contentArea_1.style.display = "none";
+        
+    }
+</script>
+{% endblock %}

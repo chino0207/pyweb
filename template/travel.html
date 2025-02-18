@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% block content1 %}
+<style>
+    table{
+        border: 1px solid #0000ff;
+        border-collapse:collapse;
+        margin-top:10px;
+    }
+    tr{
+        border:1px solid #000000;
+    }
+    td{
+        border:1px solid #000000;
+        padding:1px;
+    }
+    a{
+        text-decoration:none;
+    }
+
+    #travel_master{
+        width:100%;
+        height:100%;
+        display:flex;
+    }
+    #travel_left{
+        display:flex;
+        flex-direction:column;
+        width:200px;
+        height:100%;
+        background-color:#f0f0ff;
+    }
+    #travel_right{
+        flex-grow:1;
+        background-color: #f0f000;
+        position:relative;
+        width:100%;
+        height:100%;
+    }
+    #mapMenu{
+        border-width:1px;
+        border-style:solid;
+        border-color:#808080;
+        width:100%;
+        height:100%;
+        background-color: #e0e0ff;
+        overflow:auto;
+    }
+    .mapMenuSingle{
+        width:92%;
+        border:1px solid;
+        height:22px;
+        margin-left:1px;
+        padding-left:10px;
+        padding-top:2px;
+    }
+
+    #travel_mapstyle{
+        position:absolute;
+        top:0px;
+        right:0px;
+        background-color: #d0d0ff;
+        opacity: 0.8;
+        padding:10px;
+        font-family: Open Sans, sans-serif;
+    }
+    #map{
+        height:100%;
+    }
+
+</style>
+<div id="travel_master">
+    <div id="travel_left">
+        <div style="width:100%;display:flex;">
+            <div style="width:33%;text-align:center">
+                <img src="/static/images/icon1.png" style="width:15px;height:30px;">
+            </div>
+            <div style="width:33%;text-align:center">
+                <img src="/static/images/icon2.png" style="width:15px;height:30px;">
+            </div>
+            <div style="width:33%;text-align:center">
+                <img src="/static/images/icon3.png" style="width:15px;height:30px;">
+            </div>                        
+        </div>
+        <div style="width:100%;display:flex;">
+            <div style="width:33%;text-align:center">
+                風景
+            </div>
+            <div style="width:33%;text-align:center">
+                人物
+            </div>
+            <div style="width:33%;text-align:center">
+                其它
+            </div>                        
+        </div>
+        <div style="width:100%;display:flex;background-color:#c0c0ff;">
+            <div style="padding-left:5px;">
+                日期
+            </div>
+            <div style="padding-left:5px;">
+                <input id="mapMonth" name="mapMonth" ,="" type="month" value="{{currentMonth}}" onchange="loadMenu();" style="height:25px;">
+            </div>
+        </div>
+        <div id="mapMenu"></div>
+    </div>
+    <div id="travel_right">
+        <div id="map"></div>
+        <div id="travel_mapstyle">
+            <input id="streets-v12" type="radio" name="rtoggle" value="streets" checked="checked">
+            <label for="streets-v12">streets</label>
+            <input id="satellite-streets-v12" type="radio" name="rtoggle" value="satellite">
+            <label for="satellite-streets-v12">satellite</label>
+            <input id="outdoors-v12" type="radio" name="rtoggle" value="outdoors">
+            <label for="outdoors-v12">outdoors</label>
+            <input id="light-v11" type="radio" name="rtoggle" value="light">
+            <label for="light-v11">light</label>
+            <input id="dark-v11" type="radio" name="rtoggle" value="dark">
+            <label for="dark-v11">dark</label>
+            <img src="/static/images/fullscreen.png" width="20" height="20" id="img_screen" onclick="fullscreen()">
+        </div>
+    </div>
+</div>
+<script>
+    first=true;
+    lat=24.0661281;
+    lng=120.5326433; 
+    zoom=14;
+    fs=false;//fullscreen
+
+    initMap();
+    loadMenu();
+
+    layerList = document.getElementById('travel_mapstyle');
+    inputs = layerList.getElementsByTagName('input');
+    for (input of inputs){
+        input.onclick = (layer) => {
+            map.setStyle('mapbox://styles/mapbox/'+layer.target.id);
+        };
+    }
+
+    function initMap(){
+        mapboxgl.accessToken='pk.eyJ1IjoibmFrYW5vMDIwNyIsImEiOiJjbTZybnlkNGgwMHlvMmtxeDh1b3gyeDYxIn0.7twiuwEej1geCswIuSEEUw';
+        map=new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v12',
+            center: [lng, lat],
+            zoom: zoom,
+        });
+    }
+
+    function fullscreen(){
+        fs = !fs;
+        div=document.getElementById("travel_right");
+        img_screen=document.getElementById("img_screen");
+        if (fs){
+            div.style.position = 'absolute';
+            div.style.top=0;
+            div.style.left=0;
+            img_screen.src='/static/images/screen.png';
+            launchFullscreen(document.documentElement);
+        }
+        else{
+            div.style.position='relative';
+            img_screen.src='/static/images/fullscreen.png';
+            exitFullscreen();
+        }
+        map.resize();
+    }
+
+    function loadMenu(){
+        div=document.getElementById("mapMenu");
+        div.innerHtml="";
+        mapMonth=document.getElementById("mapMonth").value;
+        url="/travel_menu?currentMonth="+mapMonth;
+        conn1=connector(url);
+        conn1.onreadystatechange=function(){
+            if (conn1.readyState==4 && conn1.status==200){
+                div.innerHTML=conn1.responseText;
+            }
+        };
+        conn1.send();
+    }
+
+    function loadRoute(currentDay){
+        first=true;
+        url="/travel_route/?currentDay="+currentDay;
+        conn2=connector(url);
+        conn2.onreadystatechange=function(){
+            if (conn2.readyState==4 && conn2.status==200){
+               routes=JSON.parse(conn2.responseText)["routes"] ;
+            }
+        };
+        conn2.send();
+    }
+
+    function launchFullscreen(element) {
+        if(element.requestFullscreen) {
+            element.requestFullscreen();
+        }
+        else if(element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        }
+        else if(element.msRequestFullscreen){
+            element.msRequestFullscreen();
+        }
+        else if(element.webkitRequestFullscreen) {
+            element.webkitRequestFullScreen();
+        }
+    }
+    function exitFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+        else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+        else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        }
+        else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+    }
+</script>
+{% endblock %}

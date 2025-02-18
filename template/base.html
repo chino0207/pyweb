@@ -1,0 +1,197 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Nakano blog</title>
+        <script src="http://localhost/static/SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
+        <script src="http://localhost/static/SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+        <link href="http://localhost/static/SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css"/>
+        <link href="http://localhost/static/SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css"/>
+
+        <link href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
+        <script src="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
+
+    </head>
+    <style>
+        body{
+            display:flex;
+            flex-direction:column;
+            width:100%;
+            height:100%;
+            margin:0px;
+            overflow:hidden;
+            cursor: url('http://localhost/static/images/nacho_0_normal_page_01.png'), auto;
+        }
+
+        #div_banner{
+            height: 80px;
+            width:100%;
+            background-image:url("http://localhost/static/images/image (3).png");
+            background-repeat:no-repeat;
+        }
+        #div_menu{
+            background-color:#c3d0fa;
+            height: 37px;
+        }
+        #div_content{
+            background-color:#c3d0fa;
+            flex-grow:1;
+            display:flex;
+            flex-direction:column;
+            width:100%;
+            height:100%;
+            align-items:center;
+            overflow:hidden;
+        }
+        #div_copyright{
+            background-color:#00aaff;
+            height: 25px;
+            text-align:right;
+            flex-grow:1;
+        }
+        #logout{
+            display:visible;
+        }
+
+        ul.MenuBarHorizontal a{
+            color:#000;
+            background-color:transparent;
+        }
+        ul.MenuBarHorizontal a:hover{
+            background-color:#005555;
+        }
+        ul.MenuBarHorizontal ul a{
+            background-color:#dddddd;
+        }
+        ul.MenuBarHorizontal li.MenuBarItemIE{
+            background:transparent;
+        }
+        .sign_container{
+            position: absolute;
+            right: 0px;
+            z-index: 2;
+        }
+        .sign_logo {
+            position: relative;
+            margin-right: 12px;
+            margin-top:6px;
+            width:25px;
+            height:25px;
+        }
+        #div_info{
+            position: absolute;
+            right: 10px; 
+            top: 10px; 
+            width: auto; 
+            text-align: right; 
+        }
+        .info{
+            line-height:17px;
+            margin-top:0px;
+            margin-bottom:0px;
+            padding-top:0px;
+            padding-bottom:0px;
+        }
+
+    </style>
+    <script>
+        check_session();
+    //alert("ok");
+    function connector(url){
+        if (window.XMLHttpRequest) conn=new XMLHttpRequest();
+        else conn=new ActiveXObject("Microsoft.XMLHTTP");
+        conn.open("GET",url,true);
+        return conn;
+    }
+    function check_session(){
+        url="/check_session/";
+        conn_session=connector(url);
+        conn_session.onreadystatechange=function(){
+            if (conn_session.readyState==4 && conn_session.status==200){
+                data=JSON.parse(conn_session.responseText);
+                if (data["session"]=="ok"){
+                    document.getElementById("logout").style.display="flex";
+                    document.getElementById("login").style.display="none";
+                }
+
+                else{
+                    document.getElementById("logout").style.display="none";
+                    document.getElementById("login").style.display="flex"
+                }
+            }
+        }
+        conn_session.send();
+    }
+    </script>
+    <body>
+
+        <a href="/">
+            <div id="div_banner">
+                <div id="div_info" style="text-align: right;">
+                    <p id="info" style="margin-top:5px;margin-bottom:5px">Your location</p>
+                    {{info}}
+                </div>
+            </div>
+        </a>
+
+      <div id="div_menu">
+          <ul id="MenuBar1" class="MenuBarHorizontal">
+              <li style="text-align: center;">
+                  <a href="/">首頁</a>
+              </li>
+              <li>
+                  <a>相片紀錄</a>
+              <ul>
+                  <li>
+                      <a href="/gallery">圖片瀏覽</a>
+                  </li>
+                  <li>
+                      <a href="/upload/photo_form">上傳圖片</a>
+                  </li>
+                  <li>
+                      <a href="/gallery/thumb">製作縮圖</a>
+                  </li>
+              </ul>
+              </li>
+   <!--           <li>
+                   <a href="/tools/">工具下載</a>
+              </li>
+              <li>
+                   <a href="#">財經資訊</a>
+                  <ul>
+                    <li>
+                         <a href="/twstock/">台灣股市</a>
+                    </li>
+                    <li>
+                         <a href="/twgold/">台銀黃金</a>
+                    </li>
+                  </ul>
+              </li>
+              <li>
+                  <a href="/solar/">24節氣</a>
+              </li>-->
+              <li id="login" style="text-align: center;">
+                  <a href="/login/">登入</a>
+              </li>
+              <li id="logout">
+                  <a href="/logout/">登出</a>
+              </li>
+          </ul>
+      </div>
+      <div id="div_content">
+          {% block content1 %}
+          {% endblock %}
+      </div>
+
+      <!--<div id="div_copyright">
+          nakano(tpomlover@gmail.com)
+      </div>-->
+
+    </body>
+<script>
+    var MenuBar1 = new Spry.Widget.MenuBar(
+        "MenuBar1",{imgDown:"/static/SpryAssets/SpryMenuBarDownHover.gif",
+        imgRight:"http://localhost:80/static/SpryAssets/SpryMenuBarRightHover.gif"}
+    );
+
+</script>
+</html>
