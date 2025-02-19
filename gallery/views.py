@@ -1,6 +1,9 @@
 import json
 import math
 import os.path
+import os
+import platform
+OS_TYPE = platform.system()
 
 from PIL import Image
 from PIL.ImageFile import ImageFile
@@ -19,8 +22,10 @@ def html(request):
     request.session["currentPage"]="/gallery"
     if 'userAccount' not in request.session:
         return redirect("/login")
-
-    thumb_path="/Users/chino0207/Downloads/images/thumb"
+    if OS_TYPE=="Darwin":
+        thumb_path="/Users/chino0207/Downloads/images/thumb"
+    else:
+        thumb_path = "/home/ubuntu/images/thumb"
     root = os.listdir(thumb_path)
     root.sort(reverse=True)
 
@@ -41,8 +46,12 @@ def thumb(request):
 def thumb_doing(request):
     info = Global.saveHistory(request, "login")
     print("開始製作縮中囉...")
-    primitive_path="/Users/chino0207/Downloads/images/primitive"
-    thumb_path="/Users/chino0207/Downloads/images/thumb"
+    if OS_TYPE=="Darwin":
+        primitive_path="/Users/chino0207/Downloads/images/primitive"
+        thumb_path="/Users/chino0207/Downloads/images/thumb"
+    else:
+        primitive_path = "/home/ubuntu/images/primitive"
+        thumb_path = "/home/ubuntu/images/thumb"
     if not os.path.exists(thumb_path):
         os.makedirs((thumb_path))
     primitive=dirTree(primitive_path)
@@ -117,7 +126,10 @@ def listDir(path,tree):
 
 
 def listThumbDir(request):
-    path = "/Users/chino0207/Downloads/images/thumb"
+    if OS_TYPE=="Darwin":
+        path = "/Users/chino0207/Downloads/images/thumb"
+    else:
+        path="/home/ubuntu/images/thumb"
     if 'dir' in request.GET:
         dir = request.GET.get("dir", "").lstrip("/")
     else:
