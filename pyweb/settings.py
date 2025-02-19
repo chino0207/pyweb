@@ -13,12 +13,27 @@ import os
 from pathlib import Path
 import pymysql
 pymysql.install_as_MySQLdb()
+import platform
 
+OS_TYPE = platform.system()
+if OS_TYPE == "Darwin":  # macOS
+    STATIC_URL = "http://localhost/static/"
+    DEBUG = True  # Enable debug mode for development
+else:  # AWS (Ubuntu)
+    STATIC_URL = "https://nakanoblog.ddns.net/static/"
+    DEBUG = False  # Disable debug mode for production
+
+# Static files configuration
 
 from django.conf.global_settings import STATICFILES_DIRS, SESSION_COOKIE_AGE
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB

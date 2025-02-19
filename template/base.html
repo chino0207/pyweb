@@ -1,11 +1,13 @@
 <html>
     <head>
+        {% load static %}
+
         <meta charset="UTF-8">
         <title>Nakano blog</title>
-        <script src="http://localhost/static/SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
-        <script src="http://localhost/static/SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
-        <link href="http://localhost/static/SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css"/>
-        <link href="http://localhost/static/SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css"/>
+        <script src="{% static 'SpryAssets/SpryMenuBar.js' %}" type="text/javascript"></script>
+        <script src="{% static 'SpryAssets/SpryValidationTextField.js' %}" type="text/javascript"></script>
+        <link href="{% static 'SpryAssets/SpryMenuBarHorizontal.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'SpryAssets/SpryValidationTextField.css' %}" rel="stylesheet" type="text/css"/>
 
         <link href="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.css" rel="stylesheet">
         <script src="https://api.mapbox.com/mapbox-gl-js/v3.9.4/mapbox-gl.js"></script>
@@ -19,13 +21,13 @@
             height:100%;
             margin:0px;
             overflow:hidden;
-            cursor: url('http://localhost/static/images/nacho_0_normal_page_01.png'), auto;
+            cursor: url('{% static 'images/nacho_0_normal_page_01.png' %}'), auto;
         }
 
         #div_banner{
             height: 80px;
             width:100%;
-            background-image:url("http://localhost/static/images/image (3).png");
+            background-image:url("{% static 'images/image (3).png' %}");
             background-repeat:no-repeat;
         }
         #div_menu{
@@ -189,8 +191,8 @@
     </body>
 <script>
     var MenuBar1 = new Spry.Widget.MenuBar(
-        "MenuBar1",{imgDown:"/static/SpryAssets/SpryMenuBarDownHover.gif",
-        imgRight:"http://localhost:80/static/SpryAssets/SpryMenuBarRightHover.gif"}
+        "MenuBar1",{imgDown:"{% static 'SpryAssets/SpryMenuBarDownHover.gif' %}",
+        imgRight:"{% static 'SpryAssets/SpryMenuBarRightHover.gif' %}"}
     );
 
 </script>
