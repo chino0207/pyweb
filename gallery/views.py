@@ -5,6 +5,7 @@ import os
 import platform
 OS_TYPE = platform.system()
 
+
 from PIL import Image
 from PIL.ImageFile import ImageFile
 from django.http import HttpResponse
@@ -34,7 +35,7 @@ def html(request):
 
 
 
-    print(tree)
+    #print(tree)
     return render(request, "gallery/gallery.html", {"list_dir":mark_safe(tree),"info": info[1]})
 def thumb(request):
     info = Global.saveHistory(request, "login")

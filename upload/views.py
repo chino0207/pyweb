@@ -6,6 +6,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from Global import Global
+import os
+import platform
+OS_TYPE = platform.system()
 
 
 # Create your views here.
@@ -18,7 +21,10 @@ def photo_form(request):
 
 def photo_process(request):
     info = Global.saveHistory(request, "準備上傳圖片")
-    root="/Users/chino0207/Downloads/images/primitive"
+    if OS_TYPE=="Darwin":
+        root = "/Users/chino0207/Downloads/images/primitive"
+    else:
+        root="/home/ubuntu/images/primitive"
     current=datetime.now()
     yyyy=current.strftime("%Y")
     ymd=current.strftime("%Y%m%d")
