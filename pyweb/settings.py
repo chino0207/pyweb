@@ -50,7 +50,7 @@ SECRET_KEY = 'django-insecure-_#2d&9sufrdnz)okj6b(xio%t+&mfjhzowf#)io2xh!1@m2n2%
 DEBUG = True
 
 #ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ["nakanoblog.ddns.net", "3.27.70.207","localhost","127.0.0.1"]
+ALLOWED_HOSTS = ["nakanoblog.ddns.net", "3.27.70.207","localhost","127.0.0.1","3.24.33.72"]
 
 
 
